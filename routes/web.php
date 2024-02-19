@@ -28,6 +28,7 @@ Route::get('/top-rated-games', [VideogameController::class, 'topRated']);
 Route::get('/movies/shawshank-redemption', [MovieController::class, 'shawshank']);
 
 Route::get('/movies/search', [MovieController::class, 'search']);
+Route::get('/movies/search/{query}', [MovieController::class, 'searchKeyword']);
 
 
 
