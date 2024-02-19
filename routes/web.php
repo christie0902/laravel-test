@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AwardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//when the user come to the path /awards with GET request method > Handle with the index emthod of AwardController class
+// Route::get('/awards', ['App\Http\Controllers\AwardController', 'index']);
+Route::get('/awards', [AwardController::class, 'index']);
+Route::get('/awards2', [AwardController::class, 'index2']);
