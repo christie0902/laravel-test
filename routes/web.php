@@ -26,6 +26,7 @@ Route::get('/awards2', [AwardController::class, 'index2']);
 Route::get('/movies/top-rated-movies', [MovieController::class, 'topRated']);
 Route::get('/top-rated-games', [VideogameController::class, 'topRated']);
 Route::get('/movies/shawshank-redemption', [MovieController::class, 'shawshank']);
+Route::get('/movies', ['App\Http\Controllers\MovieController', 'index']);
 
 Route::get('/movies/search', [MovieController::class, 'search']);
 Route::get('/movies/search/{query}', [MovieController::class, 'searchKeyword']);

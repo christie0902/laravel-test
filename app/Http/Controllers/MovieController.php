@@ -1,11 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use DB;
 use Illuminate\Http\Request;
+use App\Models\Movie;
 
 class MovieController extends Controller
 {
+    public function index()
+    {
+        $movies = Movie::orderBy('name', 'asc')     // FROM `movies` ORDER BY `name` ASC
+            ->where('name', '!=', '')
+            ->where('votes_nr', '>=', 10000)// WHERE `votes_nr` >= 10000
+            ->limit(20)                      // LIMIT 20
+            ->get();
+        // dd($movies);
+        //the values of the table are in attributes
+
+        // $names = $movies->pluck('name','id');
+        // $movies = $movies->keyBy('name') //name will become the keys
+        //only get the name and id column
+
+        return view('movies.movies', compact('movies'));
+    }
     public function topRated()
     {
         $top_movies = DB::select("
@@ -26,15 +44,15 @@ class MovieController extends Controller
         FROM `movies`
         WHERE `name` LIKE '%Shawshank%'
         ");
-        
+
         return view('movies.details', compact('shawshank'));
     }
-    
+
     // Create instance of Request from Client to access querry properties which stands for the part after ?
     public function search(Request $request)
     {
         // $search_query = $request->query('search_query');
-        
+
         // $search_result = DB::select("
         //     SELECT *
         //     FROM `movies`
@@ -46,15 +64,57 @@ class MovieController extends Controller
 
     public function searchKeyword(Request $request)
     {
-    $search_query = $request->input('search');
+        $search_query = $request->input('search');
 
-    $search_result = DB::select("
+        $search_result = DB::select("
             SELECT *
             FROM `movies`
             WHERE `name` LIKE '%$search_query%'
             LIMIT 10
         ");
- 
-    return view('movies.search', compact('search_result'));
+
+        return view('movies.search', compact('search_result'));
     }
+
+    public function romance()
+    {
+        $genre = Genre::where('name', 'romance')->first();
+        $romance_movies = $genre->movies()
+            ->limit(20)
+            ->orderBy('name', 'asc')
+            ->get();
+        //display only romance movies
+    }
+
+    public function edit()
+    {
+        $movie_id = 111161;
+
+        $movie = Movie::findOrFail($movie_id);
+
+        // display the form
+        return view('movie.edit', compact('movie'));
+    }
+
+    public function save()
+    {
+        // handle the form's submission
+
+        $movie_id = 111161;
+
+        $movie = Movie::findOrFail($movie_id);
+
+        $movie->name = $_POST['name'] ?? $movie->name;
+        $movie->year = $_POST['year'] ?? $movie->year;
+
+        $movie->genres()->sync([37, 43]);
+        //only keep movie_id with 37 and 43 on the intermediate table and remove the rest
+        // attach -> add row on intermediate table with the values, detach -> remove
+
+        $movie->save();
+
+        return redirect('/movies/edit');
+    }
+}
+
 }
