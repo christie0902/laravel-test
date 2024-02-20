@@ -33,5 +33,6 @@ Route::get('/movies/search', [MovieController::class, 'searchKeyword']);
 Route::get('/actor', [MovieController::class, 'actorDetail']);
 
 Route::get('/movies/action', [MovieController::class, 'action']);
+Route::get('/movies/genre', [MovieController::class, 'searchGenre']);
 
 

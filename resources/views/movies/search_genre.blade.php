@@ -8,9 +8,9 @@
 </head>
 
 <body>
-    <form action="/movies/search" method="get">
-        <label for="search">What do you want to search?</label>
-        <input type="text" name="search">
+    <form action="/movies/genre" method="get">
+        <label for="genre">What genre do you want to search?</label>
+        <input type="text" name="genre">
         <button type="submit">Search</button>
     </form>
 

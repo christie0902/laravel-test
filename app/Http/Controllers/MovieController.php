@@ -139,4 +139,20 @@ class MovieController extends Controller
             ->get();
         return view('movies.action', compact('action_movies'));
     }
+
+    public function searchGenre(Request $request)
+    {
+        $search_query = $request->input('genre');
+        if ($search_query) {
+            $genre = Genre::where('name', 'like', '%' . $search_query . '%')->first();
+            $search_result = $genre->movies()
+                ->where('name', '!=', '')
+                ->limit(20)
+                ->orderBy('rating', 'desc')
+                ->get();
+
+            return view('movies.search_genre', compact('search_result'));
+        } else
+            return view('movies.search_genre');
+    }
 }
