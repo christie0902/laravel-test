@@ -49,29 +49,25 @@ class MovieController extends Controller
     }
 
     // Create instance of Request from Client to access querry properties which stands for the part after ?
-    public function search(Request $request)
-    {
-        // $search_query = $request->query('search_query');
+    // public function search(Request $request)
+    // {
+    //     // $search_query = $request->query('search_query');
 
-        // $search_result = DB::select("
-        //     SELECT *
-        //     FROM `movies`
-        //     WHERE `name` LIKE '%$search_query%'
-        //     LIMIT 10
-        // ");
-        return view('movies.search');
-    }
+    //     // $search_result = DB::select("
+    //     //     SELECT *
+    //     //     FROM `movies`
+    //     //     WHERE `name` LIKE '%$search_query%'
+    //     //     LIMIT 10
+    //     // ");
+    //     return view('movies.search');
+    // }
 
     public function searchKeyword(Request $request)
     {
         $search_query = $request->input('search');
-
-        $search_result = DB::select("
-            SELECT *
-            FROM `movies`
-            WHERE `name` LIKE '%$search_query%'
-            LIMIT 10
-        ");
+        $search_result = Movie::where('name', 'like', '%' . $search_query . '%')
+            ->limit(10)
+            ->get();
 
         return view('movies.search', compact('search_result'));
     }
@@ -115,6 +111,4 @@ class MovieController extends Controller
 
         return redirect('/movies/edit');
     }
-}
-
 }
