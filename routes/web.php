@@ -32,5 +32,6 @@ Route::get('/movies', ['App\Http\Controllers\MovieController', 'index']);
 Route::get('/movies/search', [MovieController::class, 'searchKeyword']);
 Route::get('/actor', [MovieController::class, 'actorDetail']);
 
+Route::get('/movies/action', [MovieController::class, 'action']);
 
 

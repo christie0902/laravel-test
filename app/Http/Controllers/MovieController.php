@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\MoviePerson;
 use App\Models\Position;
+use App\Models\Genre;
 
 class MovieController extends Controller
 {
@@ -74,6 +75,7 @@ class MovieController extends Controller
         return view('movies.search', compact('search_result'));
     }
 
+    //get the genre romance
     public function romance()
     {
         $genre = Genre::where('name', 'romance')->first();
@@ -125,5 +127,16 @@ class MovieController extends Controller
 
 
         return view('actors.actor', compact('actors'));
+    }
+
+    public function action()
+    {
+        $genre = Genre::where('name', 'action')->first();
+        $action_movies = $genre->movies()
+            ->where('name', '!=', '')
+            ->limit(20)
+            ->orderBy('rating', 'desc')
+            ->get();
+        return view('movies.action', compact('action_movies'));
     }
 }
