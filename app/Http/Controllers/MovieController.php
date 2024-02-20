@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\Movie;
+use App\Models\MoviePerson;
+use App\Models\Position;
 
 class MovieController extends Controller
 {
@@ -110,5 +112,18 @@ class MovieController extends Controller
         $movie->save();
 
         return redirect('/movies/edit');
+    }
+
+    public function actorDetail()
+    {
+        $actors = MoviePerson::select('movie_person.description', 'positions.slug', 'movies.name')
+            ->leftJoin('positions', 'positions.id', '=', 'movie_person.position_id')
+            ->leftJoin('movies', 'movies.id', '=', 'movie_person.movie_id')
+            ->where('slug', 'cast')
+            ->limit(10)
+            ->get();
+
+
+        return view('actors.actor', compact('actors'));
     }
 }
