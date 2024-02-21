@@ -8,7 +8,8 @@
 </head>
 
 <body>
-    <h1><?=$movie->name?></h1>
+   
+        <h1><?=$movie->name?></h1>
     <p><?=$movie->year?></p>
     <br>
     <h2><?=$movie->movieType->name?></h2>

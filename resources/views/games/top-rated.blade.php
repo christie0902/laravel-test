@@ -16,5 +16,6 @@
             </li>
         <?php endforeach;?>
     </ul>
+    <a href="{{action([App\Http\Controllers\MovieController::class, 'topRated'])}}">See top rated movies<a>
 </body>
 </html>
