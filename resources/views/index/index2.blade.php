@@ -8,6 +8,10 @@
 </head>
 
 <body>
+   @foreach (range(2000,2015) as $year)
+    <a href="{{route('movie.index', ['year' => $year])}}">Movie from {{$year}}</a>
+   @endforeach;
+   
     <h1><?=$movie->name?></h1>
     <p><?=$movie->year?></p>
     <br>

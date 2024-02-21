@@ -24,8 +24,8 @@ Route::get('/', [IndexController::class, 'index']);
 // Route::get('/awards', ['App\Http\Controllers\AwardController', 'index']);
 Route::get('/awards', [AwardController::class, 'index']);
 Route::get('/awards2', [AwardController::class, 'index2']);
-Route::get('/movies/top-rated-movies', [MovieController::class, 'topRated']);
-Route::get('/top-rated-games', [VideogameController::class, 'topRated']);
+Route::get('/movies/top-rated-movies', [MovieController::class, 'topRated'])->name('movie.top');
+Route::get('/top-rated-games', [VideogameController::class, 'topRated'])->name('game.top');
 Route::get('/movies/shawshank-redemption', [MovieController::class, 'shawshank']);
 Route::get('/movies', ['App\Http\Controllers\MovieController', 'index']);
 
@@ -45,11 +45,12 @@ Route::get('/movies/{year?}/{min_rating?}', [MovieController::class, 'action'])
     ->where('year', '\d{4}')
     ->whereNumber('min_rating');
 
+Route::get('/movies/{year?}/{min_rating?}', [MovieController::class, 'indexYear'])
+    ->where('year', '\d{4}')
+    ->whereNumber('min_rating')
+    ->name('movies.index');
 
-
-
-
-
+Route::get('/movie/{movie_id}', [IndexController::class, 'movieDetail'])->name('movies.detail');
 
 // // the {slug} parameter must be a non-numeric word for the URL to match this route
 // Route::get('/products/{slug}', [ProductController::class, 'category'])->whereAlpha('slug');

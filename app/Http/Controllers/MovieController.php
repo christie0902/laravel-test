@@ -27,6 +27,31 @@ class MovieController extends Controller
 
         return view('movies.movies', compact('movies'));
     }
+
+    public function indexYear($year = null, $min_rating = null)
+    {
+        // if ($year && !preg_match('#^\d{4}$#', $year)) {
+        //     // custom treatment of invalid year format
+        // }
+
+        $query_builder = Movie::orderBy('name', 'asc')
+            ->where('name', '!=', '')
+            ->where('votes_nr', '>=', 10000)
+            ->limit(20);
+
+        if ($year) {
+            $query_builder->where('year', $year);
+        }
+
+        if ($min_rating) {
+            $query_builder->where('rating', '>=', $min_rating);
+        }
+
+        $movies = $query_builder->get();
+
+        return view('movies.index', compact('movies'));
+    }
+
     public function topRated()
     {
         $top_movies = DB::select("

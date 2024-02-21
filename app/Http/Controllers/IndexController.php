@@ -43,10 +43,10 @@ class IndexController extends Controller
 
     }
 
-    public function movieDetail()
+    public function movieDetail($id)
     {
-        $movie_id = $_GET['id'] ?? null;
-        $movie = Movie::findOrFail($movie_id);
+        $movie = Movie::findOrFail($id);
         //show 404 error page
+        dd($movie->id . ': ' . $movie->name);
     }
 }

@@ -16,5 +16,6 @@
             </li>
         <?php endforeach;?>
     </ul>
+    <a href="{{route('game.top')}}">See top rated games</a>
 </body>
 </html>
