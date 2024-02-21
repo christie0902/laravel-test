@@ -5,6 +5,7 @@ use App\Http\Controllers\AwardController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\VideogameController;
+use App\Http\Controllers\AboutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,31 @@ Route::get('/actor', [MovieController::class, 'actorDetail']);
 Route::get('/movies/action', [MovieController::class, 'action']);
 Route::get('/movies/genre', [MovieController::class, 'searchGenre']);
 
+Route::get('/about-us', [AboutController::class, 'aboutUs']);
 
+//have parameters but optional, so you still can use /movies
+//force the parameter to be number
+//year has to be exactly 4 digits
+Route::get('/movies/{year?}/{min_rating?}', [MovieController::class, 'action'])
+    ->where('year', '\d{4}')
+    ->whereNumber('min_rating');
+
+
+
+
+
+
+
+// // the {slug} parameter must be a non-numeric word for the URL to match this route
+// Route::get('/products/{slug}', [ProductController::class, 'category'])->whereAlpha('slug');
+
+// // the {order} parameter must be one of 'name', 'price', 'availability'
+// Route::get('/products/{order}', [ProductController::class, 'index'])->whereIn('order', ['name', 'price', 
+
+// Just show HTML, potentially pass some values
+// Route::view('/terms-and-conditions', 'pages/terms_and_conditions', ['foo' => 'bar']);
+
+//redirect for old and new domain both work
+// Route::redirect('/old_url', '/new_url', 301); // 301 is the HTTP response code
+// 301 - moved permanently. The browser is supposed to remember this and next time go directly to the new URL.
+// 302 - moved temporarily. The browser should still be trying the original URL even though it will get redirected.

@@ -129,14 +129,25 @@ class MovieController extends Controller
         return view('actors.actor', compact('actors'));
     }
 
-    public function action()
+    public function action($year = null, $min_rating = null)
     {
+        // handle validation inside
+        // if ($year && !preg_match('#^'\d{4}$#', $year))
+        // {
+        //     abort('404', 'Year is not a number');
+        // }
         $genre = Genre::where('name', 'action')->first();
         $action_movies = $genre->movies()
             ->where('name', '!=', '')
             ->limit(20)
             ->orderBy('rating', 'desc')
             ->get();
+        if ($year) {
+            $action_movies->where('year', $year);
+        }
+        if ($min_rating) {
+            $action_movies->where('rating', '>=', $min_rating);
+        }
         return view('movies.action', compact('action_movies'));
     }
 
