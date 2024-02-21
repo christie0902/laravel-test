@@ -67,12 +67,7 @@ class MovieController extends Controller
 
     public function shawshank()
     {
-        $shawshank = DB::selectOne("
-        SELECT *
-        FROM `movies`
-        WHERE `name` LIKE '%Shawshank%'
-        ");
-
+        $shawshank = Movie::where('name', 'like', '%Shawshank%')->first();
         return view('movies.details', compact('shawshank'));
     }
 
@@ -108,6 +103,7 @@ class MovieController extends Controller
             ->limit(20)
             ->orderBy('name', 'asc')
             ->get();
+        dd($romance_movies);
         //display only romance movies
     }
 
@@ -173,6 +169,7 @@ class MovieController extends Controller
         if ($min_rating) {
             $action_movies->where('rating', '>=', $min_rating);
         }
+        dd($action_movies);
         return view('movies.action', compact('action_movies'));
     }
 

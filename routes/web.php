@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AwardController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\VideogameController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ReviewController as Review;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,7 @@ Route::get('/movies/{year?}/{min_rating?}', [MovieController::class, 'indexYear'
     ->name('movies.index');
 
 Route::get('/movie/{movie_id}', [IndexController::class, 'movieDetail'])->name('movies.detail');
+Route::post('/movies/{movie_id}/review', [Review::class, 'store'])->name('movies.review');
 
 // // the {slug} parameter must be a non-numeric word for the URL to match this route
 // Route::get('/products/{slug}', [ProductController::class, 'category'])->whereAlpha('slug');
