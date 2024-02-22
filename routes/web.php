@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MovieRequest;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AwardController;
@@ -8,6 +10,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\VideogameController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ReviewController as Review;
+use App\Http\Controllers\MovieRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +57,13 @@ Route::get('/movies/{year?}/{min_rating?}', [MovieController::class, 'indexYear'
 
 Route::get('/movie/{movie_id}', [IndexController::class, 'movieDetail'])->name('movies.detail');
 Route::post('/movies/{movie_id}/review', [Review::class, 'store'])->name('movies.review');
+
+// Route::get('/movies/movie_requests', [MovieRequestController::class, 'displayRequests'])->name('movies.request');
+
+Route::get('/movie-requests', [MovieRequestController::class, 'index'])->name('movie-requests');
+Route::post('/movie-requests/store', [MovieRequestController::class, 'store'])->name('movie-request.store');
+Route::get('/movie-requests/edit/{id}', [MovieRequestController::class, 'edit'])->name('movie-request.edit');
+Route::put('/movie-requests/update/{id}', [MovieRequestController::class, 'update'])->name('movie-request.update');
 
 // // the {slug} parameter must be a non-numeric word for the URL to match this route
 // Route::get('/products/{slug}', [ProductController::class, 'category'])->whereAlpha('slug');
