@@ -107,34 +107,39 @@ class MovieController extends Controller
         //display only romance movies
     }
 
-    public function edit()
+    public function edit($id)
     {
-        $movie_id = 111161;
-
-        $movie = Movie::findOrFail($movie_id);
+        $movie = Movie::findOrFail($id);
 
         // display the form
-        return view('movie.edit', compact('movie'));
+        return view('movies.edit', compact('movie'));
     }
 
-    public function save()
+    public function save($id, Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required',
+            'year' => 'required',
+        ], [
+            'name.required' => 'Please enter name of the movie',
+            'year.required' => 'Please enter the year'
+        ]);
+
         // handle the form's submission
+        $movie = Movie::findOrFail($id);
 
-        $movie_id = 111161;
+        $movie->name = $request['name'] ?? $movie->name;
+        $movie->year = $request['year'] ?? $movie->year;
+        $movie->movieType->name = $request['type'] ?? $movie->movieType->name;
 
-        $movie = Movie::findOrFail($movie_id);
-
-        $movie->name = $_POST['name'] ?? $movie->name;
-        $movie->year = $_POST['year'] ?? $movie->year;
-
-        $movie->genres()->sync([37, 43]);
+        // $movie->genres()->sync([37, 43]);
         //only keep movie_id with 37 and 43 on the intermediate table and remove the rest
         // attach -> add row on intermediate table with the values, detach -> remove
 
         $movie->save();
+        session()->flash('success_message', 'The movie has been updated!');
 
-        return redirect('/movies/edit');
+        return redirect('/movies');
     }
 
     public function actorDetail()

@@ -12,10 +12,17 @@
         'current' => 'movies'
     ]) --}}
 
+    @if (Session::has('success_message'))
+        <div>
+            {{ Session::get('success_message') }}
+        </div>
+    @endif
+
+
     @foreach (range(2000, 2015) as $year)
         <a href="{{ route('movies.index', ['year' => $year]) }}">Movies from {{ $year }}</a>
 
-        Rating:
+        Min rating:
         @foreach (range(0, 9) as $min_rating)
             <a href="{{ route('movies.index', ['year' => $year, 'min_rating' => $min_rating]) }}">{{ $min_rating }}</a>
         @endforeach
@@ -29,8 +36,11 @@
                     <strong>{{ $movie->name }}</strong>
                 </a>
                 <br>
-                {{ $movie->movieType->name }}
+                Year: {{ $movie->year }}
                 <br>
+                Type: {{ $movie->movieType->name }}
+                <br>
+                <a href="{{ route('movie.edit', ['id'=>$movie->id]) }}">Edit</a>
                 {{-- {{ $movie->genres->pluck('name')->join(', ') }} --}}
             </li>
         @endforeach

@@ -32,7 +32,7 @@ Route::get('/awards2', [AwardController::class, 'index2']);
 Route::get('/movies/top-rated-movies', [MovieController::class, 'topRated'])->name('movie.top');
 Route::get('/top-rated-games', [VideogameController::class, 'topRated'])->name('game.top');
 Route::get('/movies/shawshank-redemption', [MovieController::class, 'shawshank']);
-Route::get('/movies', ['App\Http\Controllers\MovieController', 'index']);
+
 
 // Route::get('/movies/search', [MovieController::class, 'search']);
 Route::get('/movies/search', [MovieController::class, 'searchKeyword']);
@@ -64,6 +64,30 @@ Route::get('/movie-requests', [MovieRequestController::class, 'index'])->name('m
 Route::post('/movie-requests/store', [MovieRequestController::class, 'store'])->name('movie-request.store');
 Route::get('/movie-requests/edit/{id}', [MovieRequestController::class, 'edit'])->name('movie-request.edit');
 Route::put('/movie-requests/update/{id}', [MovieRequestController::class, 'update'])->name('movie-request.update');
+
+
+// Form
+Route::get('/movies', ['App\Http\Controllers\MovieController', 'index'])->name('movie.all');
+Route::put('/movie/edit/{id}', [MovieController::class, 'save'])->name('movie.save');
+Route::get('/movie/edit/{id}', [MovieController::class, 'edit'])->name('movie.edit');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // // the {slug} parameter must be a non-numeric word for the URL to match this route
 // Route::get('/products/{slug}', [ProductController::class, 'category'])->whereAlpha('slug');
